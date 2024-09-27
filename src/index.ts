@@ -4,6 +4,7 @@ enum KEY_BINDING {
   POST_PREVIOUS = 'KeyA',
   POST_NEXT = 'KeyD',
   PAGE_NEXT = 'KeyC',
+  TOGGLE_COMMENTS = 'KeyE',
 }
 
 let selectedContentEntry: HTMLElement | null = null;
@@ -36,6 +37,9 @@ function handleKeyPress(event: KeyboardEvent) {
     case KEY_BINDING.PAGE_NEXT:
       handlePageNext();
       break;
+    case KEY_BINDING.TOGGLE_COMMENTS:
+      toggleComments();
+      break;
   }
 }
 
@@ -53,6 +57,16 @@ function handlePostPrevious() {
 
 function handlePostNext() {
   navigatePost(1);
+}
+
+function toggleComments() {
+  if (!selectedPost) { return; }
+
+  const commentButton = selectedPost.querySelector('.comment-button') as HTMLElement;
+  if (commentButton) {
+    commentButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    commentButton.click();
+  }
 }
 
 function handlePageNext() {
