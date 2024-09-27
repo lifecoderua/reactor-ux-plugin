@@ -92,11 +92,11 @@ function setSelectedContentEntry(entry: HTMLElement) {
 
   const newPost = selectedContentEntry.closest('.content-card') as HTMLElement;
   if (newPost !== selectedPost) {
-    setSelectedPost(newPost, true);
+    setSelectedPost(newPost);
   }
 }
 
-function setSelectedPost(post: HTMLElement, skipTransition: boolean = false) {
+function setSelectedPost(post: HTMLElement) {
   if (selectedPost) {
     selectedPost.style.border = '';
 
@@ -115,10 +115,6 @@ function setSelectedPost(post: HTMLElement, skipTransition: boolean = false) {
   if (expandWrapper) {
     expandWrapper.style.maxHeight = '100%';
     expandWrapper.style.overflow = 'clip';
-  }
-
-  if (!skipTransition) {
-    selectedPost.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
