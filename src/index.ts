@@ -12,7 +12,7 @@ enum KEY_BINDING {
 }
 
 // Function to handle keypress events
-function handleKeyPress(event) {
+function handleKeyPress(event: KeyboardEvent) {
   // TODO: ignore if modified (Ctrl/Cmd/Alt/Opt), we don't want to react on Ctrl+s / Ctrl+c
   console.log(`Key pressed: ${event.key}`);
 }
