@@ -14,9 +14,18 @@ enum KEY_BINDING {
 let selectedContentEntry: HTMLElement | null = null;
 let selectedPost: HTMLElement | null = null;
 
-// Function to handle keypress events
+// Handle keypress events
 function handleKeyPress(event: KeyboardEvent) {
   console.log(`Key pressed: ${event.key}`, event);
+
+  if (!selectedContentEntry) {
+    initializeVisiblePost();
+
+    // We selected the closest NEXT Post/Content. No need to navigate further.
+    if ([KEY_BINDING.CONTENT_NEXT, KEY_BINDING.POST_NEXT].includes(event.key as KEY_BINDING)) {
+      return;
+    }
+  }
 
   switch (event.key) {
     case KEY_BINDING.CONTENT_PREVIOUS:
@@ -109,20 +118,18 @@ function setSelectedPost(post: HTMLElement) {
   }
 }
 
-// Function to initialize the visible content entry
-function initializeVisibleContent() {
-  const contentEntries = document.querySelectorAll('.content-card .post-content > div');
-  for (const entry of Array.from(contentEntries)) {
-    const rect = entry.getBoundingClientRect();
-    if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-      setSelectedContentEntry(entry as HTMLElement);
+// Determine the visible post on first navigation
+function initializeVisiblePost() {
+  const posts = document.querySelectorAll('.content-card');
+  for (const post of Array.from(posts)) {
+    const rect = post.getBoundingClientRect();
+    if (rect.top >= 0) {
+      const firstContentEntry = post.querySelector('.post-content > div') as HTMLElement;
+      setSelectedContentEntry(firstContentEntry);
       break;
     }
   }
 }
-
-// Initialize the visible content entry on page load
-window.addEventListener('load', initializeVisibleContent);
 
 // Add event listener for keypress events
 document.addEventListener('keypress', handleKeyPress);
