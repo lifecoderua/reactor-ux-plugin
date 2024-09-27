@@ -1,8 +1,18 @@
-A Firefox plugin to improve the moder Reactor navigation and UX.
+A Firefox plugin to improve the modern Reactor navigation and UX.
+
+- works on https://m.joyreactor.cc
+- provides keyboard navigation
+  - w/s — Content back/forward (per image/video)
+  - a/d - Post back/forward (per post)
+  - c - next page
 
 # Build
 
+Install dependencies
+
 $ npm ci
+
+Build the dist code
 
 $ npm run build
 
