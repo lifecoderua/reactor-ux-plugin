@@ -86,10 +86,12 @@ function navigatePost(direction: number) {
 
 function setSelectedContentEntry(entry: HTMLElement) {
   if (selectedContentEntry) {
-    selectedContentEntry.style.border = '';
+    selectedContentEntry.style.borderLeft = '';
   }
   selectedContentEntry = entry;
-  selectedContentEntry.style.border = '5px solid orange';
+  // Borders doesn't play well with the content, causing a slight but irritating shift.
+  // Maybe omit those entirely, or add some off-grid or overlay indication.
+  selectedContentEntry.style.borderLeft = '0 solid orange';
   selectedContentEntry.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const newPost = selectedContentEntry.closest('.content-card') as HTMLElement;
