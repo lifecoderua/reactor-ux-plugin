@@ -5,6 +5,7 @@ A Firefox plugin to improve the modern Reactor navigation and UX.
   - w/s — Content back/forward (per image/video)
   - a/d - Post back/forward (per post)
   - c - next page
+  - e - toggle comments
 
 # Build
 
