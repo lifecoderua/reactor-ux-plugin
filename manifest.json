@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Joyreactor UX",
+    "version": "0.1.0",
+    "description": "Improves user experience for the modern Joyreactor interface.",
+    "icons": {
+      "48": "icons/reactor-ux-48.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://m.joyreactor.cc/*"],
+        "js": ["src/index.js"]
+      }
+    ],
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "joyreactor.ux@lifecoderua"
+      }
+    }
+  }
