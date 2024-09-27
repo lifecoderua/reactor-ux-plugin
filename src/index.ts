@@ -61,7 +61,7 @@ function handlePageNext() {
 }
 
 function navigateContent(direction: number) {
-  const contentEntries = document.querySelectorAll('.content-card .post-content .image');
+  const contentEntries = document.querySelectorAll('.content-card .post-content > div');
   if (contentEntries.length === 0) return;
 
   let currentIndex = selectedContentEntry ? Array.from(contentEntries).indexOf(selectedContentEntry) : -1;
@@ -78,7 +78,7 @@ function navigatePost(direction: number) {
   currentIndex = (currentIndex + direction + posts.length) % posts.length;
 
   const newPost = posts[currentIndex] as HTMLElement;
-  const firstContentEntry = newPost.querySelector('.post-content .image') as HTMLElement;
+  const firstContentEntry = newPost.querySelector('.post-content > div') as HTMLElement;
   setSelectedContentEntry(firstContentEntry);
 }
 
@@ -99,15 +99,6 @@ function setSelectedContentEntry(entry: HTMLElement) {
 function setSelectedPost(post: HTMLElement) {
   if (selectedPost) {
     selectedPost.style.border = '';
-
-    // Collapse the previously active expanded post — no real benefit.
-    // Skipped to avoid page height and navigation jumps.
-
-    // const expandWrapper = selectedPost.querySelector('.expand-wrapper') as HTMLElement;
-    // if (expandWrapper) {
-    //   expandWrapper.style.maxHeight = '1000px';
-    //   expandWrapper.style.overflow = 'hidden';
-    // }
   }
   selectedPost = post;
   selectedPost.style.border = '5px solid orange';
@@ -117,6 +108,21 @@ function setSelectedPost(post: HTMLElement) {
     expandWrapper.style.overflow = 'clip';
   }
 }
+
+// Function to initialize the visible content entry
+function initializeVisibleContent() {
+  const contentEntries = document.querySelectorAll('.content-card .post-content > div');
+  for (const entry of Array.from(contentEntries)) {
+    const rect = entry.getBoundingClientRect();
+    if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      setSelectedContentEntry(entry as HTMLElement);
+      break;
+    }
+  }
+}
+
+// Initialize the visible content entry on page load
+window.addEventListener('load', initializeVisibleContent);
 
 // Add event listener for keypress events
 document.addEventListener('keypress', handleKeyPress);
