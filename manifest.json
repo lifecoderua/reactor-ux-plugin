@@ -9,7 +9,7 @@
     "content_scripts": [
       {
         "matches": ["*://m.joyreactor.cc/*"],
-        "js": ["src/index.js"]
+        "js": ["dist/index.js"]
       }
     ],
     "browser_specific_settings": {
