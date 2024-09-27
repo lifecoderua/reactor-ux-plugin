@@ -1,6 +1,3 @@
-console.log('ReactorUX loaded');
-document.body.style.border = "5px solid red";
-
 enum KEY_BINDING {
   CONTENT_PREVIOUS = 'KeyW',
   CONTENT_NEXT = 'KeyS',
