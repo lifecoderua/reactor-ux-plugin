@@ -77,7 +77,9 @@ function navigatePost(direction: number) {
   let currentIndex = selectedPost ? Array.from(posts).indexOf(selectedPost) : -1;
   currentIndex = (currentIndex + direction + posts.length) % posts.length;
 
-  setSelectedPost(posts[currentIndex] as HTMLElement);
+  const newPost = posts[currentIndex] as HTMLElement;
+  const firstContentEntry = newPost.querySelector('.post-content .image') as HTMLElement;
+  setSelectedContentEntry(firstContentEntry);
 }
 
 function setSelectedContentEntry(entry: HTMLElement) {
@@ -87,16 +89,25 @@ function setSelectedContentEntry(entry: HTMLElement) {
   selectedContentEntry = entry;
   selectedContentEntry.style.border = '5px solid orange';
   selectedContentEntry.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const newPost = selectedContentEntry.closest('.content-card') as HTMLElement;
+  if (newPost !== selectedPost) {
+    setSelectedPost(newPost, true);
+  }
 }
 
-function setSelectedPost(post: HTMLElement) {
+function setSelectedPost(post: HTMLElement, skipTransition: boolean = false) {
   if (selectedPost) {
     selectedPost.style.border = '';
-    const expandWrapper = selectedPost.querySelector('.expand-wrapper') as HTMLElement;
-    if (expandWrapper) {
-      expandWrapper.style.maxHeight = '1000px';
-      expandWrapper.style.overflow = 'hidden';
-    }
+
+    // Collapse the previously active expanded post — no real benefit.
+    // Skipped to avoid page height and navigation jumps.
+
+    // const expandWrapper = selectedPost.querySelector('.expand-wrapper') as HTMLElement;
+    // if (expandWrapper) {
+    //   expandWrapper.style.maxHeight = '1000px';
+    //   expandWrapper.style.overflow = 'hidden';
+    // }
   }
   selectedPost = post;
   selectedPost.style.border = '5px solid orange';
@@ -105,7 +116,10 @@ function setSelectedPost(post: HTMLElement) {
     expandWrapper.style.maxHeight = '100%';
     expandWrapper.style.overflow = 'clip';
   }
-  selectedPost.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  if (!skipTransition) {
+    selectedPost.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // Add event listener for keypress events
