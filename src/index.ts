@@ -1,14 +1,12 @@
 console.log('ReactorUX loaded');
 document.body.style.border = "5px solid red";
 
-// TODO: support caps
-// TODO: support cyrillic / charkey
 enum KEY_BINDING {
-  CONTENT_PREVIOUS = 'w',
-  CONTENT_NEXT = 's',
-  POST_PREVIOUS = 'a',
-  POST_NEXT = 'd',
-  PAGE_NEXT = 'c',
+  CONTENT_PREVIOUS = 'KeyW',
+  CONTENT_NEXT = 'KeyS',
+  POST_PREVIOUS = 'KeyA',
+  POST_NEXT = 'KeyD',
+  PAGE_NEXT = 'KeyC',
 }
 
 let selectedContentEntry: HTMLElement | null = null;
@@ -16,18 +14,16 @@ let selectedPost: HTMLElement | null = null;
 
 // Handle keypress events
 function handleKeyPress(event: KeyboardEvent) {
-  console.log(`Key pressed: ${event.key}`, event);
-
   if (!selectedContentEntry) {
     initializeVisiblePost();
 
     // We selected the closest NEXT Post/Content. No need to navigate further.
-    if ([KEY_BINDING.CONTENT_NEXT, KEY_BINDING.POST_NEXT].includes(event.key as KEY_BINDING)) {
+    if ([KEY_BINDING.CONTENT_NEXT, KEY_BINDING.POST_NEXT].includes(event.code as KEY_BINDING)) {
       return;
     }
   }
 
-  switch (event.key) {
+  switch (event.code) {
     case KEY_BINDING.CONTENT_PREVIOUS:
       handleContentPrevious();
       break;
