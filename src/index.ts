@@ -77,21 +77,35 @@ function handlePageNext() {
 }
 
 function navigateContent(direction: number) {
-  const contentEntries = document.querySelectorAll('.content-card .post-content > div');
+  const contentEntries = document.querySelectorAll('.post-card .post-content > div');
   if (contentEntries.length === 0) return;
 
   let currentIndex = selectedContentEntry ? Array.from(contentEntries).indexOf(selectedContentEntry) : -1;
-  currentIndex = (currentIndex + direction + contentEntries.length) % contentEntries.length;
+  currentIndex += direction;
+
+  if (currentIndex < 0) {
+    currentIndex = 0;
+  } else if (currentIndex >= contentEntries.length) {
+    handlePageNext();
+    return;
+  }
 
   setSelectedContentEntry(contentEntries[currentIndex] as HTMLElement);
 }
 
 function navigatePost(direction: number) {
-  const posts = document.querySelectorAll('.content-card');
+  const posts = document.querySelectorAll('.post-card');
   if (posts.length === 0) return;
 
   let currentIndex = selectedPost ? Array.from(posts).indexOf(selectedPost) : -1;
-  currentIndex = (currentIndex + direction + posts.length) % posts.length;
+  currentIndex += direction;
+
+  if (currentIndex < 0) {
+    currentIndex = 0;
+  } else if (currentIndex >= posts.length) {
+    handlePageNext();
+    return;
+  }
 
   const newPost = posts[currentIndex] as HTMLElement;
   const firstContentEntry = newPost.querySelector('.post-content > div') as HTMLElement;
@@ -108,7 +122,7 @@ function setSelectedContentEntry(entry: HTMLElement) {
   selectedContentEntry.style.borderLeft = '0 solid orange';
   selectedContentEntry.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const newPost = selectedContentEntry.closest('.content-card') as HTMLElement;
+  const newPost = selectedContentEntry.closest('.post-card') as HTMLElement;
   if (newPost !== selectedPost) {
     setSelectedPost(newPost);
   }
@@ -129,7 +143,7 @@ function setSelectedPost(post: HTMLElement) {
 
 // Determine the visible post on first navigation
 function initializeVisiblePost() {
-  const posts = document.querySelectorAll('.content-card');
+  const posts = document.querySelectorAll('.post-card');
   for (const post of Array.from(posts)) {
     const rect = post.getBoundingClientRect();
     if (rect.top >= 0) {
