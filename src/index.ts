@@ -82,7 +82,7 @@ function handlePageNext() {
 }
 
 function navigateContent(direction: number) {
-  const contentEntries = document.querySelectorAll('.post-card .post-content > div');
+  const contentEntries = document.querySelectorAll('.post-card .post-header, .post-content > div[class]:not(:first-of-type)');
   if (contentEntries.length === 0) return;
 
   let currentIndex = selectedContentEntry ? Array.from(contentEntries).indexOf(selectedContentEntry) : -1;
@@ -113,7 +113,7 @@ function navigatePost(direction: number) {
   }
 
   const newPost = posts[currentIndex] as HTMLElement;
-  const firstContentEntry = newPost.querySelector('.post-content > div') as HTMLElement;
+  const firstContentEntry = newPost.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
   setSelectedContentEntry(firstContentEntry);
 }
 
@@ -152,7 +152,7 @@ function initializeVisiblePost() {
   for (const post of Array.from(posts)) {
     const rect = post.getBoundingClientRect();
     if (rect.top >= 0) {
-      const firstContentEntry = post.querySelector('.post-content > div') as HTMLElement;
+      const firstContentEntry = post.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
       setSelectedContentEntry(firstContentEntry);
       break;
     }
