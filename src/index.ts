@@ -13,7 +13,8 @@ let selectedPost: HTMLElement | null = null;
 // Handle keypress events
 function handleKeyPress(event: KeyboardEvent) {
   // if focused element is inside .comment-form — exit early
-  if (document.activeElement && document.activeElement.closest('.comment-form')) {
+  if (document.activeElement?.closest('.comment-form') 
+    || document.activeElement?.closest('input')) {
     return;
   }
 

@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Joyreactor UX",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "Improves user experience for the modern Joyreactor interface.",
     "icons": {
       "48": "icons/reactor-ux-48.jpeg"
