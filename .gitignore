@@ -5,6 +5,9 @@ web-ext-artifacts
 
 
 # === Generic ===
+# System
+.DS_Store
+
 # Logs
 logs
 *.log
