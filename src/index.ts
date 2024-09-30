@@ -1,4 +1,4 @@
-import { SELECTORS, isHiddenPostsBox } from './content';
+import { SELECTORS, isHiddenPostsBox, isCollapsedPost } from './content';
 
 enum KEY_BINDING {
   CONTENT_PREVIOUS = 'KeyW',
@@ -107,19 +107,21 @@ function handleContentExpand() {
 
   // expand the "Posts Hidden: 6" group
   if (isHiddenPostsBox(selectedPost)) {
-    // const selectedHiddenPostsBox = selectedPost;
     const postIndex = getSelectedPostIndex();
     selectedPost.click();
     unsetSelectedPost();
-    console.log('what about now', postIndex + 1);
-    navigatePost(postIndex + 1);
-    // // dirty and not reliable. Wait for dynamic load of hidden posts
-    // setTimeout(
-    //   () => navigatePost(postIndex + 1),
-    //   500
-    // );
+    // dirty and not reliable. Wait for dynamic load of hidden posts
+    setTimeout(
+      () => navigatePost(postIndex + 1),
+      300
+    );
   }
 
+  if (isCollapsedPost(selectedPost)) {
+    const uncollapseButton = selectedPost
+      .querySelector(SELECTORS.unhideSinglePostButton) as HTMLElement;
+    uncollapseButton.click();
+  }
 
 }
 
@@ -186,7 +188,6 @@ function getSelectedPostIndex(): number {
   const posts = document.querySelectorAll(`.post-card, ${SELECTORS.hiddenPostsBox}`);
   if (posts.length === 0) return -1;
 
-  console.log('me me me', selectedPost, selectedPost ? Array.from(posts).indexOf(selectedPost) : -1)
   return selectedPost ? Array.from(posts).indexOf(selectedPost) : -1;
 }
 
@@ -195,7 +196,6 @@ function navigatePost(direction: number) {
   if (posts.length === 0) return;
 
   let currentIndex = selectedPost ? Array.from(posts).indexOf(selectedPost) : -1;
-  console.log('currentIndex', currentIndex);
   currentIndex += direction;
 
   if (currentIndex < 0) {

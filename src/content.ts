@@ -9,3 +9,7 @@ export function isHiddenPostsBox(element: HTMLElement) {
   return element.tagName.toLowerCase() === 'button' 
     && element.classList.contains('post-menu-button');
 }
+
+export function isCollapsedPost(element: HTMLElement) {
+  return element.querySelector(SELECTORS.unhideSinglePostButton);
+}
