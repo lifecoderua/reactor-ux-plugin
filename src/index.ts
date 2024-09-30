@@ -1,7 +1,10 @@
+import { SELECTORS, isHiddenPostsBox } from './content';
+
 enum KEY_BINDING {
   CONTENT_PREVIOUS = 'KeyW',
   CONTENT_NEXT = 'KeyS',
   CONTENT_PLAY_TOGGLE = 'KeyP',
+  CONTENT_EXPAND = 'KeyQ',
   POST_PREVIOUS = 'KeyA',
   POST_NEXT = 'KeyD',
   PAGE_PREVIOUS = 'KeyZ',
@@ -42,6 +45,9 @@ function handleKeyPress(event: KeyboardEvent) {
       break;
     case KEY_BINDING.CONTENT_PLAY_TOGGLE:
       handleContentPlayToggle();
+      break;
+    case KEY_BINDING.CONTENT_EXPAND:
+      handleContentExpand();
       break;
     case KEY_BINDING.POST_PREVIOUS:
       handlePostPrevious();
@@ -96,6 +102,27 @@ function handleContentPlayToggle() {
   }
 }
 
+function handleContentExpand() {
+  if (!selectedPost) { return; }
+
+  // expand the "Posts Hidden: 6" group
+  if (isHiddenPostsBox(selectedPost)) {
+    // const selectedHiddenPostsBox = selectedPost;
+    const postIndex = getSelectedPostIndex();
+    selectedPost.click();
+    unsetSelectedPost();
+    console.log('what about now', postIndex + 1);
+    navigatePost(postIndex + 1);
+    // // dirty and not reliable. Wait for dynamic load of hidden posts
+    // setTimeout(
+    //   () => navigatePost(postIndex + 1),
+    //   500
+    // );
+  }
+
+
+}
+
 function handlePostPrevious() {
   navigatePost(-1);
 }
@@ -139,7 +166,7 @@ function handlePageRefresh() {
 }
 
 function navigateContent(direction: number) {
-  const contentEntries = document.querySelectorAll('.post-card .post-header, .post-content > div[class]:not(:first-of-type)');
+  const contentEntries = document.querySelectorAll(`.post-card .post-header, .post-content > div[class]:not(:first-of-type), ${SELECTORS.hiddenPostsBox}`);
   if (contentEntries.length === 0) return;
 
   let currentIndex = selectedContentEntry ? Array.from(contentEntries).indexOf(selectedContentEntry) : -1;
@@ -155,11 +182,20 @@ function navigateContent(direction: number) {
   setSelectedContentEntry(contentEntries[currentIndex] as HTMLElement);
 }
 
+function getSelectedPostIndex(): number {
+  const posts = document.querySelectorAll(`.post-card, ${SELECTORS.hiddenPostsBox}`);
+  if (posts.length === 0) return -1;
+
+  console.log('me me me', selectedPost, selectedPost ? Array.from(posts).indexOf(selectedPost) : -1)
+  return selectedPost ? Array.from(posts).indexOf(selectedPost) : -1;
+}
+
 function navigatePost(direction: number) {
-  const posts = document.querySelectorAll('.post-card');
+  const posts = document.querySelectorAll(`.post-card, ${SELECTORS.hiddenPostsBox}`);
   if (posts.length === 0) return;
 
   let currentIndex = selectedPost ? Array.from(posts).indexOf(selectedPost) : -1;
+  console.log('currentIndex', currentIndex);
   currentIndex += direction;
 
   if (currentIndex < 0) {
@@ -171,7 +207,11 @@ function navigatePost(direction: number) {
 
   const newPost = posts[currentIndex] as HTMLElement;
   const firstContentEntry = newPost.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
-  setSelectedContentEntry(firstContentEntry);
+  if (firstContentEntry) {
+    setSelectedContentEntry(firstContentEntry);    
+  } else {
+    setSelectedContentEntry(newPost);
+  }
 }
 
 function handlePostUpvote() {
@@ -212,8 +252,11 @@ function setSelectedContentEntry(entry: HTMLElement) {
   selectedContentEntry.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const newPost = selectedContentEntry.closest('.post-card') as HTMLElement;
-  if (newPost !== selectedPost) {
+  if (newPost && newPost !== selectedPost) {
     setSelectedPost(newPost);
+  }
+  if (!newPost) {
+    setSelectedPost(selectedContentEntry);
   }
 }
 
@@ -241,12 +284,16 @@ function setSelectedPost(post: HTMLElement) {
 
 // Determine the visible post on first navigation
 function initializeVisiblePost() {
-  const posts = document.querySelectorAll('.post-card');
+  const posts = document.querySelectorAll(`.post-card, ${SELECTORS.hiddenPostsBox}`);
   for (const post of Array.from(posts)) {
     const rect = post.getBoundingClientRect();
     if (rect.top >= 0) {
       const firstContentEntry = post.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
-      setSelectedContentEntry(firstContentEntry);
+      if (firstContentEntry) {
+        setSelectedContentEntry(firstContentEntry);
+      } else {
+        setSelectedContentEntry(post as HTMLElement);
+      }
       break;
     }
   }
