@@ -112,10 +112,10 @@ function handlePagePrevious() {
 function handlePageRefresh() {
   const refreshButton = document.querySelector('.secondary-menu .ant-btn-primary') as HTMLButtonElement;
   if (refreshButton) {
+    unsetSelectedPost();
+    selectedContentEntry = null;
     refreshButton.click();
     window.scrollTo(0, 0);
-    selectedContentEntry = null;
-    selectedPost = null;
   }
 }
 
@@ -198,10 +198,15 @@ function setSelectedContentEntry(entry: HTMLElement) {
   }
 }
 
-function setSelectedPost(post: HTMLElement) {
+function unsetSelectedPost() {
   if (selectedPost) {
     selectedPost.style.border = '';
   }
+  selectedPost = null;
+}
+
+function setSelectedPost(post: HTMLElement) {
+  unsetSelectedPost();
   selectedPost = post;
   selectedPost.style.border = '5px solid orange';
   const expandWrapper = selectedPost.querySelector('.expand-wrapper') as HTMLElement;
