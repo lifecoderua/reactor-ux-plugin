@@ -3,8 +3,13 @@ enum KEY_BINDING {
   CONTENT_NEXT = 'KeyS',
   POST_PREVIOUS = 'KeyA',
   POST_NEXT = 'KeyD',
+  PAGE_PREVIOUS = 'KeyZ',
   PAGE_NEXT = 'KeyC',
-  TOGGLE_COMMENTS = 'KeyE',
+  PAGE_REFRESH = 'KeyR',
+  POST_TOGGLE_COMMENTS = 'KeyE',
+  POST_UPVOTE = 'KeyY',
+  POST_DOWNVOTE = 'KeyN',
+  POST_ADD_TO_FAVOURITE = 'KeyF',
 }
 
 let selectedContentEntry: HTMLElement | null = null;
@@ -43,7 +48,7 @@ function handleKeyPress(event: KeyboardEvent) {
     case KEY_BINDING.PAGE_NEXT:
       handlePageNext();
       break;
-    case KEY_BINDING.TOGGLE_COMMENTS:
+    case KEY_BINDING.POST_TOGGLE_COMMENTS:
       toggleComments();
       break;
   }
