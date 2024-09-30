@@ -2,6 +2,7 @@ A Firefox plugin to improve the modern Reactor navigation and UX.
 
 - works on https://m.joyreactor.cc
 - provides keyboard navigation
+  - r - refresh feed (page)
   - w/s — Content back/forward (per image/video)
   - a/d - Post back/forward (per post)
   - z - previous page
