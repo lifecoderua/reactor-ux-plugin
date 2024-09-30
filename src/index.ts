@@ -48,6 +48,21 @@ function handleKeyPress(event: KeyboardEvent) {
     case KEY_BINDING.PAGE_NEXT:
       handlePageNext();
       break;
+    case KEY_BINDING.PAGE_PREVIOUS:
+      handlePagePrevious();
+      break;
+    case KEY_BINDING.PAGE_REFRESH:
+      handlePageRefresh();
+      break;
+    case KEY_BINDING.POST_UPVOTE:
+      handlePostUpvote();
+      break;
+    case KEY_BINDING.POST_DOWNVOTE:
+      handlePostDownvote();
+      break;
+    case KEY_BINDING.POST_ADD_TO_FAVOURITE:
+      handlePostAddToFavourite();
+      break;
     case KEY_BINDING.POST_TOGGLE_COMMENTS:
       toggleComments();
       break;
@@ -87,6 +102,20 @@ function handlePageNext() {
   }
 }
 
+function handlePagePrevious() {
+  const previousPageLink = document.querySelector('.min-h-pagination a:first-child') as HTMLAnchorElement;
+  if (previousPageLink) {
+    previousPageLink.click();
+  }
+}
+
+function handlePageRefresh() {
+  const refreshButton = document.querySelector('.secondary-menu .ant-btn-primary') as HTMLButtonElement;
+  if (refreshButton) {
+    refreshButton.click();
+  }
+}
+
 function navigateContent(direction: number) {
   const contentEntries = document.querySelectorAll('.post-card .post-header, .post-content > div[class]:not(:first-of-type)');
   if (contentEntries.length === 0) return;
@@ -121,6 +150,33 @@ function navigatePost(direction: number) {
   const newPost = posts[currentIndex] as HTMLElement;
   const firstContentEntry = newPost.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
   setSelectedContentEntry(firstContentEntry);
+}
+
+function handlePostUpvote() {
+  if (!selectedPost) { return; }
+
+  const upvoteButton = selectedPost.querySelector('[aria-label="Upvote"]') as HTMLElement;
+  if (upvoteButton) {
+    upvoteButton.click();
+  }
+}
+
+function handlePostDownvote() {
+  if (!selectedPost) { return; }
+
+  const downvoteButton = selectedPost.querySelector('[aria-label="Downvote"]') as HTMLElement;
+  if (downvoteButton) {
+    downvoteButton.click();
+  }
+}
+
+function handlePostAddToFavourite() {
+  if (!selectedPost) { return; }
+
+  const favouriteButton = selectedPost.querySelector('[aria-label="star"]') as HTMLElement;
+  if (favouriteButton) {
+    favouriteButton.click();
+  }
 }
 
 function setSelectedContentEntry(entry: HTMLElement) {
