@@ -1,6 +1,7 @@
 enum KEY_BINDING {
   CONTENT_PREVIOUS = 'KeyW',
   CONTENT_NEXT = 'KeyS',
+  CONTENT_PLAY_TOGGLE = 'KeyP',
   POST_PREVIOUS = 'KeyA',
   POST_NEXT = 'KeyD',
   PAGE_PREVIOUS = 'KeyZ',
@@ -39,6 +40,9 @@ function handleKeyPress(event: KeyboardEvent) {
     case KEY_BINDING.CONTENT_NEXT:
       handleContentNext();
       break;
+    case KEY_BINDING.CONTENT_PLAY_TOGGLE:
+      handleContentPlayToggle();
+      break;
     case KEY_BINDING.POST_PREVIOUS:
       handlePostPrevious();
       break;
@@ -75,6 +79,21 @@ function handleContentPrevious() {
 
 function handleContentNext() {
   navigateContent(1);
+}
+
+function handleContentPlayToggle() {
+  if (!selectedPost || !selectedContentEntry) { return; }
+
+  const videoElement = selectedContentEntry.querySelector('video') as HTMLVideoElement
+    || selectedPost.querySelector('video') as HTMLVideoElement
+
+  if (videoElement) {
+    if (videoElement.paused) {
+      videoElement.play();
+    } else {
+      videoElement.pause();
+    }
+  }
 }
 
 function handlePostPrevious() {

@@ -4,8 +4,12 @@ A Firefox plugin to improve the modern Reactor navigation and UX.
 - provides keyboard navigation
   - w/s — Content back/forward (per image/video)
   - a/d - Post back/forward (per post)
+  - z - previous page
   - c - next page
   - e - toggle comments
+  - f - star post
+  - y/n - upvote / downvote
+  - p - run/pause video
 
 # Build
 
