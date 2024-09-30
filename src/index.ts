@@ -160,5 +160,45 @@ function initializeVisiblePost() {
   }
 }
 
-// Add event listener for keypress events
-document.addEventListener('keypress', handleKeyPress);
+/**
+ * Prevents controls from seizing focus, and re-trigger on Space press.
+ * Allows navigation with Space
+ */
+function preventFocusCapture() {
+  document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', function() {
+        this.blur();
+    });
+  }); 
+}
+
+/**
+ * Handle the events for the dynamically loading content
+ */
+function setContentChangeObserver() {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length) {
+        preventFocusCapture();
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+
+/**
+ * Entry point
+ */
+function init() {
+  setContentChangeObserver();
+
+  // Add event listener for keypress events
+  document.addEventListener('keypress', handleKeyPress);
+}
+
+init();
