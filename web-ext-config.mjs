@@ -12,7 +12,7 @@ export default {
     'src',
     'dist/reactor-ux.umd.js',
     'tsconfig.json',
-    'viteconfig.json',
+    'vite.config.js',
     'web-ext-config.mjs',
   ],
 };
