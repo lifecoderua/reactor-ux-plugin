@@ -113,6 +113,9 @@ function handlePageRefresh() {
   const refreshButton = document.querySelector('.secondary-menu .ant-btn-primary') as HTMLButtonElement;
   if (refreshButton) {
     refreshButton.click();
+    window.scrollTo(0, 0);
+    selectedContentEntry = null;
+    selectedPost = null;
   }
 }
 
