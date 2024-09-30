@@ -14,5 +14,6 @@ export default {
     'tsconfig.json',
     'vite.config.js',
     'web-ext-config.mjs',
+    '.vscode'
   ],
 };
