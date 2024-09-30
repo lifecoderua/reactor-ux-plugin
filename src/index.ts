@@ -208,6 +208,10 @@ function setSelectedPost(post: HTMLElement) {
   if (expandWrapper) {
     expandWrapper.style.maxHeight = '100%';
     expandWrapper.style.overflow = 'clip';
+    const expandableContentBlock = selectedPost.querySelector('.expandable-post-content');
+    if (expandableContentBlock) {
+      expandableContentBlock.remove();
+    }
   }
 }
 
