@@ -3,10 +3,11 @@
   "version": "0.1.7",
   "scripts": {
     "build": "tsc && vite build",
-    "build:extension": "npm run build && web-ext build"
+    "build:extension": "npm run build && web-ext build",
   },
   "devDependencies": {
-    "typescript": "^4.4.4",
-    "vite": "^7.3.0"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "web-ext": "^9.2.0"
   }
 }
