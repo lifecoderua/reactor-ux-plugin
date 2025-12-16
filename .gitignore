@@ -3,6 +3,8 @@
 ## Artifacts
 web-ext-artifacts
 
+# === IDE ===
+.idea/
 
 # === Generic ===
 # System
