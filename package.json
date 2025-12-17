@@ -1,9 +1,10 @@
 {
   "name": "joyreactor-ux",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "scripts": {
     "build": "tsc && vite build",
-    "build:extension": "npm run build && web-ext build"
+    "build:extension": "npm run build && web-ext build",
+    "watch": "tsc --noEmit && vite build --watch"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

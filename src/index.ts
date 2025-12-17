@@ -1,3 +1,5 @@
+import './originalEventsHandling';
+
 enum KEY_BINDING {
   CONTENT_PREVIOUS = 'KeyW',
   CONTENT_NEXT = 'KeyS',
@@ -19,7 +21,7 @@ let selectedPost: HTMLElement | null = null;
 // Handle keypress events
 function handleKeyPress(event: KeyboardEvent) {
   // if focused element is inside .comment-form — exit early
-  if (document.activeElement?.closest('.comment-form') 
+  if (document.activeElement?.closest('.comment-form')
     || document.activeElement?.closest('input')) {
     return;
   }
@@ -261,7 +263,7 @@ function preventFocusCapture() {
     button.addEventListener('click', function() {
         this.blur();
     });
-  }); 
+  });
 }
 
 /**

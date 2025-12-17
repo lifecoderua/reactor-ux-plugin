@@ -12,7 +12,8 @@
           "*://safereactor.cc/*","*://*.safereactor.cc/*",
           "*://joyreactor.cc/*","*://*.joyreactor.cc/*"
         ],
-        "js": ["dist/reactor-ux.es.js"]
+        "js": ["dist/reactor-ux.es.js"],
+        "run_at": "document_start"
       }
     ],
     "browser_specific_settings": {
