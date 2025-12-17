@@ -12,7 +12,7 @@ script.textContent = `(() => {
 
   const shouldWrap = (target, type) => {
     return (target === window || target === document)
-      && (type === 'keydown' || type === 'keypress' || type === 'keyup');
+      && type === 'keydown';
   };
 
   const isWSKeyEvent = (event) => {
