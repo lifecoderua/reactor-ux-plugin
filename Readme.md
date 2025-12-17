@@ -16,11 +16,19 @@ A Firefox plugin to improve the modern Reactor navigation and UX.
 
 Install dependencies
 
-$ npm ci
+> $ npm ci
 
 Build the dist code
 
-$ npm run build
+> $ npm run build
+
+Build and watch for changes
+
+> $ npm run watch
+
+Build and package the addon
+
+> $ npm run build:extension
 
 # Plugin Install
 
