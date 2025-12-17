@@ -8,7 +8,10 @@
     },
     "content_scripts": [
       {
-        "matches": ["*://joyreactor.cc/*","*://*.joyreactor.cc/*"],
+        "matches": [
+          "*://safereactor.cc/*","*://*.safereactor.cc/*",
+          "*://joyreactor.cc/*","*://*.joyreactor.cc/*"
+        ],
         "js": ["dist/reactor-ux.es.js"]
       }
     ],
