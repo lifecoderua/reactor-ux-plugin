@@ -289,6 +289,16 @@ function setContentChangeObserver() {
  * Entry point
  */
 function init() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onDocumentReady);
+
+    return;
+  }
+
+  onDocumentReady();
+}
+
+function onDocumentReady() {
   setContentChangeObserver();
 
   // Add event listener for keypress events
