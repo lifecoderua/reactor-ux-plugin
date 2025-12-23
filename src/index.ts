@@ -151,9 +151,10 @@ function getPostContentEntries(post: Element) {
     return entries;
   }
 
-  const mediaBlocks = Array.from(
-    contentRoot.querySelectorAll(':scope > div[class]')
-  ).filter((block) => block.querySelector('img, video, iframe')) as HTMLElement[];
+  const mediaBlocks = Array.from(contentRoot.children).filter((child) =>
+    child.matches('img, video, iframe, picture')
+    || child.querySelector('img, video, iframe, picture')
+  ) as HTMLElement[];
 
   if (mediaBlocks.length ?? mediaBlocks.length > 1) {
     entries.push(...mediaBlocks.slice(1));
