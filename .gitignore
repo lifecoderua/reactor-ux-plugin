@@ -10,6 +10,9 @@ web-ext-artifacts
 # System
 .DS_Store
 
+# Agents
+_agents/
+
 # Logs
 logs
 *.log
