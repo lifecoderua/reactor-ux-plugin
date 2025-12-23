@@ -11,7 +11,7 @@ web-ext-artifacts
 .DS_Store
 
 # Agents
-_agents/
+agents/
 
 # Logs
 logs
