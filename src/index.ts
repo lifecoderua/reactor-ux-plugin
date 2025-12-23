@@ -1,5 +1,5 @@
 import './originalEventsHandling';
-import { enhancePostTags, ensureTagStyles } from './tagLinks';
+import { TagLinksModule } from './tagLinks';
 
 enum KEY_BINDING {
   CONTENT_PREVIOUS = 'KeyW',
@@ -18,6 +18,7 @@ enum KEY_BINDING {
 
 let selectedContentEntry: HTMLElement | null = null;
 let selectedPost: HTMLElement | null = null;
+const modules = [new TagLinksModule()];
 
 // Handle keypress events
 function handleKeyPress(event: KeyboardEvent) {
@@ -330,10 +331,8 @@ function setContentChangeObserver() {
     mutations.forEach((mutation) => {
       if (mutation.addedNodes.length) {
         preventFocusCapture();
-        mutation.addedNodes.forEach((node) => {
-          if (node instanceof HTMLElement) {
-            enhancePostTags(node);
-          }
+        modules.forEach((module) => {
+          module.onMutation(mutation);
         });
       }
     });
@@ -361,8 +360,9 @@ function init() {
 
 function onDocumentReady() {
   setContentChangeObserver();
-  ensureTagStyles();
-  enhancePostTags();
+  modules.forEach((module) => {
+    module.onDocumentReady();
+  });
 
   // Add event listener for keypress events
   document.addEventListener('keypress', handleKeyPress);
