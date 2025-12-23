@@ -3,6 +3,13 @@
     "name": "Joyreactor UX",
     "version": "0.1.8",
     "description": "Improves user experience for the modern Joyreactor interface.",
+    "permissions": ["downloads"],
+    "host_permissions": [
+      "*://safereactor.cc/*",
+      "*://*.safereactor.cc/*",
+      "*://joyreactor.cc/*",
+      "*://*.joyreactor.cc/*"
+    ],
     "icons": {
       "48": "icons/reactor-ux-48.jpeg"
     },
@@ -20,5 +27,8 @@
       "gecko": {
         "id": "joyreactor.ux@lifecoderua"
       }
+    },
+    "background": {
+      "service_worker": "background.js"
     }
   }

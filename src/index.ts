@@ -1,8 +1,9 @@
 import './originalEventsHandling';
 import { TagLinksModule } from './tagLinks';
 import { NavigationModule } from './navigationModule';
+import { DownloadControlsModule } from './downloadControlsModule';
 
-const modules = [new TagLinksModule(), new NavigationModule()];
+const modules = [new TagLinksModule(), new NavigationModule(), new DownloadControlsModule()];
 
 /**
  * Handle the events for the dynamically loading content
