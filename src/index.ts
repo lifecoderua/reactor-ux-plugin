@@ -140,11 +140,61 @@ function handlePageRefresh() {
   }
 }
 
+function getPostContentEntries(post: Element) {
+  const entries: HTMLElement[] = [];
+  const header = post.querySelector('.post-header') as HTMLElement;
+  if (header) {
+    entries.push(header);
+  }
+  const contentRoot = post.querySelector('.post-content');
+  if (!contentRoot) {
+    return entries;
+  }
+
+  const mediaBlocks = Array.from(
+    contentRoot.querySelectorAll(':scope > div[class]')
+  ).filter((block) => block.querySelector('img, video, iframe')) as HTMLElement[];
+
+  if (mediaBlocks.length ?? mediaBlocks.length > 1) {
+    entries.push(...mediaBlocks.slice(1));
+
+    return entries;
+  }
+
+  const standardBlocks = Array.from(
+    contentRoot.querySelectorAll(':scope > div[class]:not(:first-of-type)')
+  ) as HTMLElement[];
+  if (standardBlocks.length) {
+    entries.push(...standardBlocks);
+    return entries;
+  }
+
+  const fallbackBlocks = Array.from(contentRoot.children).filter((child) =>
+    child.querySelector('img, video, iframe')
+  ) as HTMLElement[];
+
+  if (fallbackBlocks.length > 1) {
+    entries.push(...fallbackBlocks.slice(1));
+  }
+
+  return entries;
+}
+
+function getContentEntries() {
+  const posts = Array.from(document.querySelectorAll('.post-card'));
+  if (posts.length === 0) {
+    const fallbackPost = document.querySelector('.post') || document.body;
+    return getPostContentEntries(fallbackPost);
+  }
+
+  return posts.flatMap((post) => getPostContentEntries(post));
+}
+
 function navigateContent(direction: number) {
-  const contentEntries = document.querySelectorAll('.post-card .post-header, .post-content > div[class]:not(:first-of-type)');
+  const contentEntries = getContentEntries();
   if (contentEntries.length === 0) return;
 
-  let currentIndex = selectedContentEntry ? Array.from(contentEntries).indexOf(selectedContentEntry) : -1;
+  let currentIndex = selectedContentEntry ? contentEntries.indexOf(selectedContentEntry) : -1;
   currentIndex += direction;
 
   if (currentIndex < 0) {
@@ -154,7 +204,7 @@ function navigateContent(direction: number) {
     return;
   }
 
-  setSelectedContentEntry(contentEntries[currentIndex] as HTMLElement);
+  setSelectedContentEntry(contentEntries[currentIndex]);
 }
 
 function navigatePost(direction: number) {
@@ -172,8 +222,10 @@ function navigatePost(direction: number) {
   }
 
   const newPost = posts[currentIndex] as HTMLElement;
-  const firstContentEntry = newPost.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
-  setSelectedContentEntry(firstContentEntry);
+  const contentEntries = getPostContentEntries(newPost);
+  if (contentEntries[0]) {
+    setSelectedContentEntry(contentEntries[0]);
+  }
 }
 
 function handlePostUpvote() {
@@ -247,8 +299,10 @@ function initializeVisiblePost() {
   for (const post of Array.from(posts)) {
     const rect = post.getBoundingClientRect();
     if (rect.top >= 0) {
-      const firstContentEntry = post.querySelector('.post-header, .post-content > div[class]:not(:first-of-type)') as HTMLElement;
-      setSelectedContentEntry(firstContentEntry);
+      const contentEntries = getPostContentEntries(post);
+      if (contentEntries[0]) {
+        setSelectedContentEntry(contentEntries[0]);
+      }
       break;
     }
   }
