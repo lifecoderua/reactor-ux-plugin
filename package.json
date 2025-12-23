@@ -4,7 +4,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "build:extension": "npm run build && web-ext build",
-    "watch": "tsc --noEmit && vite build --watch"
+    "watch": "tsc --noEmit && vite build --watch",
+    "lint": "tsc"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

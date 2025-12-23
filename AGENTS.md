@@ -7,6 +7,14 @@ and clones sharing the same content engine.
 
 - use `Playwright MCP` to validate page structure and test scripts
   - on start, check if the Playwright's browser is already open. If yes - reopen it.
+- use `tsc` for lint
+
+# Data fetching
+
+- when navigated past the last post using `s` key, the new data get loaded without the page reload.
+- the same happens on the web-ext `c`, `z`, and native navigation by page links (`Лента`, `Новое`, `Хорошее` etc)
+- occasionally extra posts get loaded without navigation due to content filters and user preferences
+- behaviour modification should account for this specifics and apply to the freshly loaded posts
 
 # Media Types
 
