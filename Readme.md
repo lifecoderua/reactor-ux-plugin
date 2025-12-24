@@ -1,6 +1,6 @@
 A Firefox plugin to improve the modern Reactor navigation and UX.
 
-- works on https://m.joyreactor.cc
+- works on https://safereactor.cc, https://joyreactor.cc and https://reactor.cc
 - provides keyboard navigation
   - r - refresh feed (page)
   - w/s — Content back/forward (per image/video)

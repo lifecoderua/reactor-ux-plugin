@@ -10,7 +10,8 @@
       {
         "matches": [
           "*://safereactor.cc/*","*://*.safereactor.cc/*",
-          "*://joyreactor.cc/*","*://*.joyreactor.cc/*"
+          "*://joyreactor.cc/*","*://*.joyreactor.cc/*",
+          "*://reactor.cc/*","*://*.reactor.cc/*"
         ],
         "js": ["dist/reactor-ux.es.js"],
         "run_at": "document_start"
