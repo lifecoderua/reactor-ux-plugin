@@ -12,6 +12,7 @@ const TAG_SPLIT_DATA = 'reactorUxTagSplit';
 const TAG_SPLIT_WRAPPER_CLASS = 'reactor-ux-tag-split';
 const TAG_MOBILE_CLASS = 'reactor-ux-tag-mobile';
 const TAG_MAIN_CLASS = 'reactor-ux-tag-main';
+const JOYREACTOR_DOMAIN = 'joyreactor.cc';
 
 export class TagLinksModule extends BaseModule {
   onDocumentReady() {
@@ -32,6 +33,9 @@ export class TagLinksModule extends BaseModule {
   }
 
   private ensureTagStyles() {
+    if (!this.isJoyreactorHost()) {
+      return;
+    }
     if (document.getElementById(TAG_SPLIT_STYLE_ID)) {
       return;
     }
@@ -70,6 +74,10 @@ export class TagLinksModule extends BaseModule {
   }
 
   private enhancePostTags(root: ParentNode = document) {
+    if (!this.isJoyreactorHost()) {
+      return;
+    }
+
     const tagContainers: Element[] = [];
     if (root instanceof Element && root.matches('.post-tags')) {
       tagContainers.push(root);
@@ -104,6 +112,12 @@ export class TagLinksModule extends BaseModule {
         wrapper.append(mobileLink, tagLink);
       });
     });
+  }
+
+  private isJoyreactorHost() {
+    const { hostname } = window.location;
+
+    return hostname === JOYREACTOR_DOMAIN || hostname.endsWith(`.${JOYREACTOR_DOMAIN}`);
   }
 
   private getMobileHost() {
